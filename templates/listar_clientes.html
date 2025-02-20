@@ -1,63 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-bt">
+<html lang="pt-br">
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banco RaroAcademy</title>
-
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
-<body>
-    <h1>Clientes:</h1>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% for cliente in clientes %}
-        Nome: {{ cliente.nome }}<br>
-        CPF: {{ cliente.cpf }}<br>
-        Telefone: {{ cliente.telefone }}<br>
-        Renda: {{ cliente.renda_mensal }}<br>
-        Emprestimos: 
-        <ul>
-            {% for emprestimo in cliente.emprestimo_set.all %}
-                <li>Valor: R${{ emprestimo.valor_emprestimo }}</li>
-            {% empty %}
-                <li>Nenhum empréstimo solicitado.</li>
-            {% endfor %}
-        </ul>
-        Limite do Cartão de Credito:
-        <ul>
-            {% for cartao in cliente.cartoes_credito.all %}  
-                <li>Limite: R${{ cartao.limite_credito }}</li>
-            {% empty %}
-                <li>Nenhum cartão de crédito solicitado.</li>
-            {% endfor %}
-        </ul>
-        <form action="{% url 'solicitar_emprestimo' cliente.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Solicitar emprestimo</button>
-        </form><br>
+    <body>
+        <div class="container">
+            <h1>Clientes</h1>
 
-        <form action="{% url 'solicitar_cartao_credito' cliente.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Solicitar Credito</button>
-        </form>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        <form action="{% url 'excluir_cliente' cliente.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Excluir Cliente</button>
-        </form>
-        <form action="{% url 'atualizar_cliente' cliente.id %}" method="get">
-            <button type="submit">Atualizar Cliente</button>
-        </form>
-    {% endfor %}
+            <div class="clientes-container">
+                {% for cliente in clientes %}
+                    <div class="cliente-card">
+                        <h3>Nome: {{ cliente.nome }}</h3>
+                        <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
+                        <p><strong>Telefone:</strong> {{ cliente.telefone }}</p>
+                        <p><strong>Renda Mensal:</strong> R$ {{ cliente.renda_mensal }}</p>
+                        
+                        <p><strong>Empréstimos:</strong></p>
+                        <ul class="emprestimos">
+                            {% for emprestimo in cliente.emprestimo_set.all %}
+                                <li>Valor: R$ {{ emprestimo.valor_emprestimo }}</li>
+                            {% empty %}
+                                <li>Nenhum empréstimo solicitado.</li>
+                            {% endfor %}
+                        </ul>
 
-    <a class="nav_link" href="{% url 'home' %}"><button>Pagina inicial</button></a>
-    
-</body>
+                        <p><strong>Limite do Cartão de Crédito:</strong></p>
+                        <ul class="cartoes">
+                            {% for cartao in cliente.cartoes_credito.all %}  
+                                <li>Limite: R$ {{ cartao.limite_credito }}</li>
+                            {% empty %}
+                                <li>Nenhum cartão de crédito solicitado.</li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="botoes-acoes">
+                            <form action="{% url 'solicitar_emprestimo' cliente.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Solicitar Empréstimo</button>
+                            </form>
+
+                            <form action="{% url 'solicitar_cartao_credito' cliente.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Solicitar Cartão de Crédito</button>
+                            </form>
+
+                            <form action="{% url 'excluir_cliente' cliente.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Excluir Cliente</button>
+                            </form>
+
+                            <form action="{% url 'atualizar_cliente' cliente.id %}" method="get">
+                                <button type="submit" class="btn btn-edit">Atualizar Cliente</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <a class="nav_link" href="{% url 'home' %}">
+                <button class="btn btn-home">Página Inicial</button>
+            </a>
+        </div>
+    </body>
 </html>

@@ -8,25 +8,27 @@
 
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
-<body>
-    <h1>Bem vindo ao banco RaroAcademy</h1>
-    <h2>Aqui seu investimento vale mais!</h2>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <a 
-        class="nav_link" 
-        href="{% url 'cadastrar_cliente_formulario' %}">
-        <button>Cadastrar Cliente</button>
-    </a>
-    <a 
-        class="nav_link" 
-        href="{% url 'listar_cliente' %}">
-        <button>Clientes cadastrados</button>
-    </a>
-</body>
+    <body>
+        <div class="home-container">
+            <h1>Bem-vindo ao banco RaroAcademy</h1>
+            <h2>Aqui seu investimento vale mais!</h2>
+            
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            <div class="home-buttons">
+                <a class="nav_link" href="{% url 'cadastrar_cliente_formulario' %}">
+                    <button class="btn">Cadastrar Cliente</button>
+                </a>
+                <a class="nav_link" href="{% url 'listar_cliente' %}">
+                    <button class="btn">Clientes cadastrados</button>
+                </a>
+            </div>
+        </div>
+    </body>
 </html>

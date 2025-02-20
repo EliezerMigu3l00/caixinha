@@ -8,25 +8,41 @@
 
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head
-<body>
-    <h1>Atualizar Cliente</h1>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form action="{% url 'atualizar_cliente' cliente.id %}" method="post">
-        {% csrf_token %}
-        Nome: <input type="text" name="nome" value="{{ cliente.nome }}"><br>
-        Data de Nascimento: <input type="date" name="data_nascimento" value="{{ cliente.data_nascimento }}" required><br>
-        CPF: <input type="text" name="cpf" value="{{ cliente.cpf }}"><br>
-        Telefone: <input type="text" name="telefone" value="{{ cliente.telefone }}"><br>
-        Renda Mensal: <input type="text" name="renda_mensal" value="{{ cliente.renda_mensal }}"><br>
-    
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{% url 'listar_cliente' %}"><button>Voltar para lista</button></a>
-</body>
+    <body>
+        <div class="form-container">
+            <h1>Atualizar Cliente</h1>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form action="{% url 'atualizar_cliente' cliente.id %}" method="post">
+                {% csrf_token %}
+                <label for="nome">Nome: </label><br>
+                <input type="text" name="nome" value="{{ cliente.nome }}"><br><br>
+
+                <label for="data_nascimento">Data de Nascimento: </label><br>
+                <input type="date" name="data_nascimento" value="{{ cliente.data_nascimento }}" required><br><br>
+
+                <label for="cpf">CPF: </label><br>
+                <input type="text" name="cpf" value="{{ cliente.cpf }}"><br><br>
+
+                <label for="telefone">Telefone: </label><br>
+                <input type="text" name="telefone" value="{{ cliente.telefone }}"><br><br>
+
+                <label for="renda_mensal">Renda Mensal: </label><br>
+                <input type="text" name="renda_mensal" value="{{ cliente.renda_mensal }}"><br><br>
+                
+                <button type="submit" class="btn">Salvar</button>
+            </form>
+
+            <a href="{% url 'listar_cliente' %}">
+                <button class="btn btn-home">Voltar para lista</button>
+            </a>
+        </div>
+    </body>
 </html>

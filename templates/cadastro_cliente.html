@@ -8,34 +8,41 @@
 
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head
-<body>
-    <h1>Cadastrar cliente:</h1>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form action="{% url 'cadastrar_cliente' %}" method="post">
-        {% csrf_token %}
-        <label for="nome">Nome: </label><br>
-        <input type="text" name="nome" placeholder="Nome"><br><br>
+    <body>
+        <div class="form-container">
+            <h1>Cadastrar Cliente</h1>
 
-        <label for="data_nascimento">Data de Nascimento: </label><br>
-        <input type="date" name="data_nascimento" required><br><br>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        <label for="cpf">CPF: </label><br>
-        <input type="number" name="cpf" placeholder="CPF"><br><br>
+            <form action="{% url 'cadastrar_cliente' %}" method="post">
+                {% csrf_token %}
+                <label for="nome">Nome: </label><br>
+                <input type="text" name="nome" placeholder="Nome"><br><br>
 
-        <label for="telefone">Telefone: </label><br>
-        <input type="number" name="telefone" placeholder="Telefone"><br><br>
-        
-        <label for="renda_mensal">Renda mensal: </label><br>
-        <input type="number" name="renda_mensal" placeholder="Renda Mensal"><br><br>
-        <button type="submit">Cadastrar Cliente</button>
-    </form>
+                <label for="data_nascimento">Data de Nascimento: </label><br>
+                <input type="date" name="data_nascimento" required><br><br>
 
-    <a class="nav_link" href="{% url 'home' %}"><button>Pagina inicial</button></a>
-</body>
+                <label for="cpf">CPF: </label><br>
+                <input type="number" name="cpf" placeholder="CPF"><br><br>
+
+                <label for="telefone">Telefone: </label><br>
+                <input type="number" name="telefone" placeholder="Telefone"><br><br>
+
+                <label for="renda_mensal">Renda Mensal: </label><br>
+                <input type="number" name="renda_mensal" placeholder="Renda Mensal"><br><br>
+                
+                <button type="submit" class="btn">Cadastrar Cliente</button>
+            </form>
+
+            <a class="nav_link" href="{% url 'home' %}">
+                <button class="btn btn-home">Página inicial</button>
+            </a>
+        </div>
+    </body>
 </html>
