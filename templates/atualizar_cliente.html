@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Cliente</title>
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head
+<body>
+    <h1>Atualizar Cliente</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="{% url 'atualizar_cliente' cliente.id %}" method="post">
+        {% csrf_token %}
+        Nome: <input type="text" name="nome" value="{{ cliente.nome }}"><br>
+        Data de Nascimento: <input type="date" name="data_nascimento" value="{{ cliente.data_nascimento }}" required><br>
+        CPF: <input type="text" name="cpf" value="{{ cliente.cpf }}"><br>
+        Telefone: <input type="text" name="telefone" value="{{ cliente.telefone }}"><br>
+        Renda Mensal: <input type="text" name="renda_mensal" value="{{ cliente.renda_mensal }}"><br>
+    
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'listar_cliente' %}"><button>Voltar para lista</button></a>
+</body>
+</html>

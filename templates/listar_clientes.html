@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco RaroAcademy</title>
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+    <h1>Clientes:</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% for cliente in clientes %}
+        Nome: {{ cliente.nome }}<br>
+        CPF: {{ cliente.cpf }}<br>
+        Telefone: {{ cliente.telefone }}<br>
+        Renda: {{ cliente.renda_mensal }}<br>
+        Emprestimos: 
+        <ul>
+            {% for emprestimo in cliente.emprestimo_set.all %}
+                <li>Valor: R${{ emprestimo.valor_emprestimo }}</li>
+            {% empty %}
+                <li>Nenhum empréstimo solicitado.</li>
+            {% endfor %}
+        </ul>
+        Limite do Cartão de Credito:
+        <ul>
+            {% for cartao in cliente.cartoes_credito.all %}  
+                <li>Limite: R${{ cartao.limite_credito }}</li>
+            {% empty %}
+                <li>Nenhum cartão de crédito solicitado.</li>
+            {% endfor %}
+        </ul>
+        <form action="{% url 'solicitar_emprestimo' cliente.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Solicitar emprestimo</button>
+        </form><br>
+
+        <form action="{% url 'solicitar_cartao_credito' cliente.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Solicitar Credito</button>
+        </form>
+
+        <form action="{% url 'excluir_cliente' cliente.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Excluir Cliente</button>
+        </form>
+        <form action="{% url 'atualizar_cliente' cliente.id %}" method="get">
+            <button type="submit">Atualizar Cliente</button>
+        </form>
+    {% endfor %}
+
+    <a class="nav_link" href="{% url 'home' %}"><button>Pagina inicial</button></a>
+    
+</body>
+</html>
